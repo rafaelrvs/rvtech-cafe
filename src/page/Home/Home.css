@@ -1,0 +1,11 @@
+.home{
+    height: 100vh;
+}
+.headerHome .headerImg{
+    width: 100%;
+}
+.mainHome{
+    display: flex;
+    justify-content: center;
+  
+}

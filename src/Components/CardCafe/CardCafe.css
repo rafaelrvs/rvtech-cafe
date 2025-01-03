@@ -1,0 +1,156 @@
+.cardCafe {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    padding: 20px;
+
+}
+
+.contentCardCafe {
+    width: 220px;
+    height: 300px;
+    position: relative;
+    perspective: 1000px; /* Necessário para o efeito 3D */
+    cursor: pointer;
+    transition: transform 0.6s ease-in-out, box-shadow 0.3s ease; /* Suavidade na rotação */
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #FAEFF4;
+}
+
+.contentCardCafe:hover {
+    transform: scale(1.01); /* Efeito de zoom suave ao passar o mouse */
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15); /* Realce no hover */
+}
+
+.contentCardCafe.flipped .cardFront {
+    transform: rotateY(180deg); /* Frente rotaciona */
+}
+
+.contentCardCafe.flipped .cardBack {
+    transform: rotateY(0deg); /* Verso fica visível */
+}
+
+.cardFront,
+.cardBack {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden; /* Oculta a parte traseira durante a rotação */
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: transform 0.6s ease-in-out; /* Suavidade aplicada às faces */
+}
+
+.cardFront {
+    transform: rotateY(0deg);
+    background-color: #FAEFF4;
+}
+
+.cardBack {
+    transform: rotateY(-180deg);
+    background-color: #fafafa;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 10px;
+    line-height: 1.5;
+    box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.1);
+}
+
+.imgCardCafe {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+    margin-bottom: 8px;
+}
+
+.nome {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 8px;
+    align-self: flex-start;
+}
+
+.preco {
+    align-self: flex-start;
+    font-size: 1rem;
+    color: #4caf50;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.btnCardCafe {
+    width: 100%;
+    background-color: #5bd663;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 0.9rem;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+}
+
+.btnCardCafe:hover {
+    background-color: #4caf50;
+}
+
+.verDetalhes,
+.voltar {
+    font-size: 0.85rem;
+    color: #555;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 12px;
+    align-self: flex-end;
+}
+
+.voltar {
+    align-self: center;
+    color: #d9534f;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .contentCardCafe {
+        width: 180px;
+        height: 250px;
+    }
+
+    .imgCardCafe {
+        height: 100px;
+    }
+
+    .nome {
+        font-size: 1rem;
+    }
+
+    .preco {
+        font-size: 0.9rem;
+    }
+
+    .btnCardCafe {
+        font-size: 0.8rem;
+        padding: 8px;
+    }
+
+    .verDetalhes,
+    .voltar {
+        font-size: 0.75rem;
+    }
+}
