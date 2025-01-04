@@ -4,8 +4,39 @@
 .headerHome .headerImg{
     width: 100%;
 }
+.containerBtnHeader{
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 25px;
+    background-color: #030303;
+    margin-top: -10px;
+}
+.btnFinalizar{
+    background-color:#5BD663 ;
+    margin-right: 25px;
+}
+.btnpedidos{
+    color: #fff;
+    background-color: #5B67D6;
+}
+
+.btnFinalizar,.btnpedidos{
+    border: none; 
+    border-radius: 5px;
+    padding: 10px 25px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+
+.btnFinalizar:hover,.btnpedidos:hover{
+    transition: 0.3s;
+    background-color: rgb(43, 255, 0);
+    scale: 1.02;
+}
 .mainHome{
     display: flex;
     justify-content: center;
-  
+
+      
 }
