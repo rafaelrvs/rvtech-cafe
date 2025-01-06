@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Html5Qrcode, Html5QrcodeSupportedFormats } from "html5-qrcode";
+import { Html5Qrcode } from "html5-qrcode";
 import styles from "./QRScannerComponent.module.css";
 
 interface QRScannerComponentProps {
@@ -22,8 +22,7 @@ const QRScannerComponent: React.FC<QRScannerComponentProps> = ({ onScan, onError
         cameraConfig,
         {
           fps: 10,
-          qrbox: 250,
-          supportedScanFormats: [Html5QrcodeSupportedFormats.QR_CODE],
+          qrbox: 250, // Define a área de detecção do QR Code
         },
         (decodedText) => {
           console.log("QR Code escaneado:", decodedText);
