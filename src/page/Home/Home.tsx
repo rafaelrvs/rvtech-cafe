@@ -5,7 +5,7 @@ import { useGlobalContext } from '../../Context/GlobalContext';
 import ModalLogin from '../../Components/Modal/ModalLogin';
 
 const Home: React.FC = () => {
-  const [imageSrc, setImageSrc] = useState('/images/inicioheader.svg');
+  const [imageSrc, setImageSrc] = useState('public/images/inicioheader.svg');
   const [ativaModal,setAtivaModal] = useState(false)
   const { popUp} = useGlobalContext();
   useEffect(() => {
@@ -22,9 +22,9 @@ const Home: React.FC = () => {
 
     const handleResize = () => {
       if (window.innerWidth <= 550) {
-        setImageSrc('/images/cafe_mobile.jpg');
+        setImageSrc('public/images/cafe_mobile.jpg');
       } else {
-        setImageSrc('/images/inicioheader.svg');
+        setImageSrc('public/images/inicioheader.svg');
       }
     };
 
