@@ -78,6 +78,7 @@ const ModalLogin: React.FC = () => {
               <QRScanner
                 delay={300}
                 style={{ width: "100%" }}
+                facingMode="environment" // Define a câmera traseira
                 onError={handleError}
                 onScan={handleScan}
               />
