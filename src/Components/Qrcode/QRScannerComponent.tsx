@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Html5QrcodeScanner, Html5QrcodeSupportedFormats } from "html5-qrcode";
+import { Html5Qrcode, Html5QrcodeSupportedFormats } from "html5-qrcode";
 import styles from "./QRScannerComponent.module.css";
 
 interface QRScannerComponentProps {
@@ -8,51 +8,52 @@ interface QRScannerComponentProps {
 }
 
 const QRScannerComponent: React.FC<QRScannerComponentProps> = ({ onScan, onError }) => {
-  const scannerRef = useRef<Html5QrcodeScanner | null>(null);
-  const [facingMode, setFacingMode] = useState<"environment" | "user">("environment"); // Câmera traseira padrão
+  const [facingMode, setFacingMode] = useState<"environment" | "user">("environment");
+  const scannerRef = useRef<Html5Qrcode | null>(null);
 
-  const toggleCamera = () => {
-    setFacingMode((prev) => (prev === "environment" ? "user" : "environment"));
+  const startScanner = (mode: "environment" | "user") => {
+    const cameraConfig = {
+      facingMode: mode, // Define a câmera
+    };
+
+    scannerRef.current
+      ?.start(
+        cameraConfig,
+        {
+          fps: 10,
+          qrbox: 250,
+          supportedScanFormats: [Html5QrcodeSupportedFormats.QR_CODE],
+        },
+        (decodedText) => {
+          console.log("QR Code escaneado:", decodedText);
+          onScan(decodedText); // Callback para o texto do QR Code
+        },
+        (errorMessage) => {
+          console.error("Erro ao escanear QR Code:", errorMessage);
+          onError(new Error(errorMessage));
+        }
+      )
+      .catch((err) => console.error("Erro ao iniciar scanner:", err));
+  };
+
+  const stopScanner = () => {
+    scannerRef.current?.stop().catch((err) => console.error("Erro ao parar scanner:", err));
   };
 
   useEffect(() => {
-    const scanner = new Html5QrcodeScanner(
-      "reader",
-      {
-        fps: 10,
-        qrbox: 250,
-        formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
-      },
-      false
-    );
+    scannerRef.current = new Html5Qrcode("reader"); // Inicializa o scanner
 
-    const config = {
-      constraints: {
-        video: {
-          facingMode: facingMode, // Define a câmera atual (traseira ou frontal)
-        },
-      },
-    };
-
-    scanner.render(
-      (decodedText) => {
-        console.log("QR Code escaneado:", decodedText);
-        onScan(decodedText); // Callback para o texto do QR Code
-      },
-      (error) => {
-        const errorObject = typeof error === "string" ? new Error(error) : error;
-        console.error("Erro ao escanear QR Code:", errorObject);
-        onError(errorObject);
-      },
-      config // Passa a configuração de câmera para o scanner
-    );
-
-    scannerRef.current = scanner;
+    startScanner(facingMode); // Inicia com a câmera padrão
 
     return () => {
-      scanner.clear().catch((err) => console.error("Erro ao limpar scanner:", err));
+      stopScanner(); // Para o scanner ao desmontar o componente
     };
-  }, [facingMode, onScan, onError]);
+  }, [facingMode]);
+
+  const toggleCamera = () => {
+    stopScanner(); // Para o scanner atual
+    setFacingMode((prev) => (prev === "environment" ? "user" : "environment")); // Alterna a câmera
+  };
 
   return (
     <div className={styles.scannerContainer}>
