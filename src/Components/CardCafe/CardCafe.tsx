@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "./CardCafe.css";
-import { dataCafe } from './../../data/data.js';
+import { dataCafe } from '../../data/data';
+
 
 const CardCafe: React.FC = () => {
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
