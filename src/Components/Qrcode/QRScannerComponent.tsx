@@ -24,11 +24,13 @@ const QRScannerComponent: React.FC<QRScannerComponentProps> = ({ onScan, onError
     scanner.render(
       (decodedText) => {
         console.log("QR Code escaneado:", decodedText);
-        onScan(decodedText); // Callback para o QR code escaneado
+        onScan(decodedText); // Chama o callback fornecido com o texto do QR Code
       },
       (error) => {
-        console.error("Erro ao escanear QR Code:", error);
-        onError(error); // Callback para erro
+        // Trata o erro e garante que seja um objeto do tipo `Error`
+        const errorObject = typeof error === "string" ? new Error(error) : error;
+        console.error("Erro ao escanear QR Code:", errorObject);
+        onError(errorObject);
       }
     );
 
