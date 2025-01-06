@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Html5QrcodeScanner, Html5QrcodeSupportedFormats } from "html5-qrcode";
 import styles from "./QRScannerComponent.module.css";
 
@@ -9,6 +9,11 @@ interface QRScannerComponentProps {
 
 const QRScannerComponent: React.FC<QRScannerComponentProps> = ({ onScan, onError }) => {
   const scannerRef = useRef<Html5QrcodeScanner | null>(null);
+  const [facingMode, setFacingMode] = useState<"environment" | "user">("environment"); // Câmera traseira padrão
+
+  const toggleCamera = () => {
+    setFacingMode((prev) => (prev === "environment" ? "user" : "environment"));
+  };
 
   useEffect(() => {
     const scanner = new Html5QrcodeScanner(
@@ -21,17 +26,25 @@ const QRScannerComponent: React.FC<QRScannerComponentProps> = ({ onScan, onError
       false
     );
 
+    const config = {
+      constraints: {
+        video: {
+          facingMode: facingMode, // Define a câmera atual (traseira ou frontal)
+        },
+      },
+    };
+
     scanner.render(
       (decodedText) => {
         console.log("QR Code escaneado:", decodedText);
-        onScan(decodedText); // Chama o callback fornecido com o texto do QR Code
+        onScan(decodedText); // Callback para o texto do QR Code
       },
       (error) => {
-        // Trata o erro e garante que seja um objeto do tipo `Error`
         const errorObject = typeof error === "string" ? new Error(error) : error;
         console.error("Erro ao escanear QR Code:", errorObject);
         onError(errorObject);
-      }
+      },
+      config // Passa a configuração de câmera para o scanner
     );
 
     scannerRef.current = scanner;
@@ -39,9 +52,16 @@ const QRScannerComponent: React.FC<QRScannerComponentProps> = ({ onScan, onError
     return () => {
       scanner.clear().catch((err) => console.error("Erro ao limpar scanner:", err));
     };
-  }, [onScan, onError]);
+  }, [facingMode, onScan, onError]);
 
-  return <div id="reader" className={styles.reader}></div>;
+  return (
+    <div className={styles.scannerContainer}>
+      <div id="reader" className={styles.reader}></div>
+      <button className={styles.toggleButton} onClick={toggleCamera}>
+        Alternar para {facingMode === "environment" ? "Câmera Frontal" : "Câmera Traseira"}
+      </button>
+    </div>
+  );
 };
 
 export default QRScannerComponent;
