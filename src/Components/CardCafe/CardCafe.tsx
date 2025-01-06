@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import "./CardCafe.css";
 import { dataCafe } from '../../data/data';
 
+interface Cafe {
+  img: string;
+  nome: string;
+  preco: number; // Armazenado como número para facilitar cálculos
+  detalhes: string;
+}
 
 const CardCafe: React.FC = () => {
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
@@ -14,7 +20,7 @@ const CardCafe: React.FC = () => {
 
   return (
     <div className="cardCafe">
-      {dataCafe.map((item, index) => (
+     {dataCafe.map((item: Cafe , index: number) => (
         <div
           key={index}
           className={`contentCardCafe ${flippedCards.includes(index) ? 'flipped' : ''}`}
