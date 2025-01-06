@@ -1,28 +1,27 @@
 import React, { useState } from "react";
-import QRScanner from "react-qr-scanner"; // Biblioteca para escanear QR Code
 import styles from "./ModalLogin.module.css";
+
+import { useQRScanner } from "../hooks/useQRScanner";
+import QRScannerComponent from "../Qrcode/QRScannerComponent";
+
 
 const ModalLogin: React.FC = () => {
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
   const [mesa, setMesa] = useState("");
-  const [showScanner, setShowScanner] = useState(false); // Controle do scanner
 
-  // Callback quando o QR Code é escaneado
-  const handleScan = (data: string | null) => {
-    if (data) {
-      setMesa(data); // Atualiza o valor da mesa
-      setShowScanner(false); // Fecha o scanner
-    }
-  };
-
-  const handleError = (err: Error) => {
-    console.error("Erro ao escanear QR Code:", err);
-  };
+  const { showScanner, toggleScanner, handleScan, handleError } = useQRScanner(
+    (data) => setMesa(data || ""),
+    (err) => console.error("Erro ao escanear:", err)
+  );
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("Nome:", nome, "CPF:", cpf, "Mesa:", mesa);
+    if (!nome || !cpf || !mesa) {
+      alert("Por favor, preencha todos os campos!");
+      return;
+    }
+    console.log("Formulário enviado:", { nome, cpf, mesa });
     alert("Formulário enviado com sucesso!");
   };
 
@@ -40,17 +39,21 @@ const ModalLogin: React.FC = () => {
               value={nome}
               onChange={(e) => setNome(e.target.value)}
               required
+              minLength={3}
+              aria-label="Nome completo"
             />
           </div>
           <div className={styles.formGroup}>
             <label htmlFor="cpf">CPF</label>
             <input
               id="cpf"
-              type="number"
+              type="text"
               placeholder="Digite o CPF"
               value={cpf}
               onChange={(e) => setCpf(e.target.value)}
               required
+              maxLength={11}
+              aria-label="CPF"
             />
           </div>
           <div className={styles.formGroup}>
@@ -63,35 +66,19 @@ const ModalLogin: React.FC = () => {
                 value={mesa}
                 onChange={(e) => setMesa(e.target.value)}
                 required
+                aria-label="Número da mesa"
               />
               <button
                 type="button"
                 className={styles.qrButton}
-                onClick={() => setShowScanner(!showScanner)}
+                onClick={toggleScanner}
               >
-                Escanear QR Code
+                {showScanner ? "Fechar Scanner" : "Escanear QR Code"}
               </button>
             </div>
           </div>
           {showScanner && (
-            <div className={styles.scanner}>
-              <QRScanner
-                delay={300}
-                style={{ width: "100%" }}
-                constraints={{
-                  video: { facingMode: "environment" }, // Define a câmera traseira
-                }}
-                onError={handleError}
-                onScan={handleScan}
-              />
-              <button
-                type="button"
-                className={styles.closeScanner}
-                onClick={() => setShowScanner(false)}
-              >
-                Fechar Scanner
-              </button>
-            </div>
+            <QRScannerComponent onScan={handleScan} onError={handleError} />
           )}
           <button type="submit" className={styles.submitButton}>
             Cadastrar
