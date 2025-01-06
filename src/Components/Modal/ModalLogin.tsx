@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import styles from "./ModalLogin.module.css";
-
 import { useQRScanner } from "../hooks/useQRScanner";
 import QRScannerComponent from "../Qrcode/QRScannerComponent";
-
 
 const ModalLogin: React.FC = () => {
   const [nome, setNome] = useState("");

@@ -1,8 +1,18 @@
 {
+  "compilerOptions": {
+    "composite": true, // Necessário para projetos com referências
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" },
-    
+    { "path": "./tsconfig.node.json" }
   ]
 }
