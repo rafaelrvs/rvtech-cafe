@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import "./Home.css";
 import CardCafe from './../../Components/CardCafe/CardCafe';
 import { useGlobalContext } from '../../Context/GlobalContext';
+import ModalLogin from '../../Components/Modal/ModalLogin';
 
 const Home: React.FC = () => {
   const [imageSrc, setImageSrc] = useState('src/assets/inicioheader.svg');
   const [ativaModal,setAtivaModal] = useState(false)
-  const { popUp,setPopUp } = useGlobalContext();
+  const { popUp} = useGlobalContext();
   useEffect(() => {
 
     if (!popUp) {
@@ -52,6 +53,7 @@ const Home: React.FC = () => {
         </div>
       </header>
       <main className='mainHome'>
+        {ativaModal&&<ModalLogin/>}
         <CardCafe />
       </main>
     </div>
