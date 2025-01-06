@@ -10,15 +10,14 @@ interface QRScannerComponentProps {
 const QRScannerComponent: React.FC<QRScannerComponentProps> = ({ onScan, onError }) => {
   return (
     <div className={styles.scannerContainer}>
-      <QRScanner
-        delay={300}
-        style={{ width: "100%" }}
-        constraints={{
-          video: { facingMode: "environment" },
-        }}
-        onError={onError}
-        onScan={onScan}
-      />
+<QRScanner
+  delay={300}
+  style={{ width: "100%" }}
+  facingMode="environment" as any // Ignora a verificação de tipo
+  onError={handleError}
+  onScan={handleScan}
+/>
+
     </div>
   );
 };
