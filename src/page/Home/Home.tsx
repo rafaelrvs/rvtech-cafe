@@ -22,9 +22,9 @@ const Home: React.FC = () => {
 
     const handleResize = () => {
       if (window.innerWidth <= 550) {
-        setImageSrc('../images/cafe_mobile.jpg');
+        setImageSrc('/../images/cafe_mobile.jpg');
       } else {
-        setImageSrc('../images/inicioheader.svg');
+        setImageSrc('/../images/inicioheader.svg');
       }
     };
 
