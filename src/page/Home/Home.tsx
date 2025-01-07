@@ -6,16 +6,27 @@ import ModalLogin from '../../Components/Modal/ModalLogin';
 
 const Home: React.FC = () => {
   const [imageSrc, setImageSrc] = useState('public/images/inicioheader.svg');
-  const [ativaModal,setAtivaModal] = useState(false)
+  const [ativaModal, setAtivaModal] = useState(false)
   const { popUp} = useGlobalContext();
+
+  useEffect(() => {
+    if (!popUp) {
+      setAtivaModal(true)
+
+    } else {
+      setAtivaModal(false)
+
+    }
+  }, [popUp])
+
   useEffect(() => {
 
     if (!popUp) {
       setAtivaModal(true)
-      
-    }else{
+
+    } else {
       setAtivaModal(false)
-    
+
     }
 
 
@@ -48,12 +59,12 @@ const Home: React.FC = () => {
       <header className='headerHome'>
         <img className='headerImg' src={imageSrc} alt="Header" />
         <div className='containerBtnHeader'>
-          <input className='btnFinalizar'   type="button" value="Finalizar pedido" />
-          <input   className='btnpedidos ' type="button" value="Seus pedidos" />
+          <input className='btnFinalizar' type="button" value="Finalizar pedido" />
+          <input className='btnpedidos ' type="button" value="Seus pedidos" />
         </div>
       </header>
       <main className='mainHome'>
-        {ativaModal&&<ModalLogin/>}
+        {ativaModal && <ModalLogin />}
         <CardCafe />
       </main>
     </div>
