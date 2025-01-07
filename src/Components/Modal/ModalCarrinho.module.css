@@ -1,0 +1,83 @@
+.modalCarrinho {
+
+    height: 80vh;
+    width: 50vw;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color: #fff;
+    border: 3px solid #5B67D6;
+    border-radius: 5px;
+    box-shadow: #0056b3 0px 0px 10px;
+    animation: fade .4s ease-in-out;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+}
+.messageDefault{
+  
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.closePage {
+    display: flex;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+
+    position: fixed;
+    top: 2px;
+    right: 2px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+
+}
+
+.closePage:hover {
+
+    scale: 1.03;
+    transition: 0.3s;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+
+    }
+
+    to {
+        opacity: 1;
+        top: 50%;
+       
+
+    }
+}
+
+.item{
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+margin-top: 15px;
+background-color: rgb(230, 221, 221);
+box-shadow: 0px 0px 1px;
+
+}
+
+.imgProd{
+    height: 150px;
+}
+.descProduto{
+    display: flex;
+    flex-direction: column;
+    
+}

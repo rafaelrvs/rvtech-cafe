@@ -47,6 +47,7 @@ const CardCafe: React.FC = () => {
             promocao: false, // Adicione lógica para promoção se necessário
             valorPromocao: 0,
             descricao: item.detalhes,
+            urlPedido:item.img,
           },
         ],
       }));

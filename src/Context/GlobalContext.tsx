@@ -32,7 +32,8 @@ interface Pedido {
     valor: number;
     promocao: boolean;
     valorPromocao: number;
-    descricao:string
+    descricao:string;
+    urlPedido:string;
   }>;
 }
 
@@ -59,7 +60,8 @@ export const GlobalStorage: React.FC<GlobalStorageProps> = ({ children }) => {
         valor: 0,
         promocao: true,
         valorPromocao: 0,
-        descricao:""
+        descricao:"",
+        urlPedido:"",
       },
     ],
   });

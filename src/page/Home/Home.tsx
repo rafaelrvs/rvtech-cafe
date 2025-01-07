@@ -3,15 +3,21 @@ import "./Home.css";
 import CardCafe from './../../Components/CardCafe/CardCafe';
 import { useGlobalContext } from '../../Context/GlobalContext';
 import ModalLogin from '../../Components/Modal/ModalLogin';
+import ModalCarrinho from '../../Components/Modal/ModalCarrinho';
 
 const Home: React.FC = () => {
   const [imageSrc, setImageSrc] = useState('public/images/inicioheader.svg');
   const [ativaModal, setAtivaModal] = useState(false)
+  const [btnPedido, setBtnPedido] = useState(false)
   const { popUp,pedido,setPedido} = useGlobalContext();
   const totalPedidos = pedido.item.reduce((total, item) => total + item.quantidade, 0);
-  const totalValor = pedido.item.reduce((total, item) => total + item.valor, 0);
-  const valorTratado = totalValor.toFixed(2);
 
+  const totalValorCafes = pedido.item.reduce((total, item) => {
+    return item.nome ? total + (item.quantidade * item.valor) : total;
+  }, 0);
+  
+  const valorTratado = totalValorCafes.toFixed(2);
+  
 
 
   useEffect(() => {
@@ -68,13 +74,14 @@ const Home: React.FC = () => {
           <input className='btnFinalizar' type="button" value="Finalizar pedido" />
           <div className='container-btnPedidos'>
             <span className='circle-container-btnPedidos'>{totalPedidos}</span>
-          <input className='btnpedidos ' type="button" value="Seus pedidos" />
+          <input className='btnpedidos ' type="button" value="Seus pedidos" onClick={()=>setBtnPedido(!btnPedido)} />
           </div>
         </div>
       </header>
       <main className='mainHome'>
         {ativaModal && <ModalLogin />}
         <CardCafe />
+        {btnPedido&&<ModalCarrinho setBtnPedido={setBtnPedido} btnPedido={btnPedido}/>}
       </main>
     </div>
   );
