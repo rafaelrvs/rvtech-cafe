@@ -9,7 +9,7 @@
 
 .contentCardCafe {
     width: 220px;
-    height: 300px;
+    height: 350px;
     position: relative;
     perspective: 1000px; /* Necessário para o efeito 3D */
     cursor: pointer;
@@ -94,8 +94,8 @@
 
 .btnCardCafe {
     width: 100%;
-    background-color: #5bd663;
-    color: #fff;
+    background-color: #5BD663;
+    color: rgb(41, 39, 39);
     border: none;
     padding: 10px;
     font-size: 0.9rem;
@@ -112,12 +112,13 @@
 
 .verDetalhes,
 .voltar {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: #555;
     text-decoration: underline;
     cursor: pointer;
-    margin-top: 12px;
+    margin-bottom: 12px;
     align-self: flex-end;
+
 }
 
 .voltar {
@@ -128,8 +129,8 @@
 
 @media (max-width: 768px) {
     .contentCardCafe {
-        width: 180px;
-        height: 250px;
+        width: 250px;
+        height: 280px;
     }
 
     .imgCardCafe {
@@ -154,3 +155,43 @@
         font-size: 0.75rem;
     }
 }
+/* Estilo do container do controle de quantidade */
+.quantityControl {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+   width: 100%;
+  }
+  
+  /* Estilo dos botões "+" e "-" */
+  .quantityControl button {
+    background-color: #5B67D6; /* Cor de fundo azul */
+    color: #fff; /* Cor do texto branca */
+    border: none; /* Remove bordas */
+    border-radius: 5px; /* Bordas arredondadas */
+    width: 60px;
+    height: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer; /* Muda o cursor ao passar sobre o botão */
+    transition: background-color 0.3s ease; /* Transição suave */
+    margin-bottom: 10px;
+  }
+  
+  /* Alteração de cor ao passar o mouse */
+  .quantityControl button:hover {
+    background-color: #0b23f8; /* Tom mais escuro de azul */
+  }
+  
+  /* Estilo do contador */
+  .quantityControl span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333; /* Cor do texto */
+    width: 30px;
+    height: 30px;
+    text-align: center; /* Centraliza o texto */
+    display: inline-block;
+  }
+  
