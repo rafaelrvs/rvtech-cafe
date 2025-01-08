@@ -27,6 +27,7 @@ interface Pedido {
   id: number;
   cliente:string;
   item: Array<{
+    idPed:string;
     nome: string;
     quantidade:number;
     valor: number;
@@ -55,6 +56,7 @@ export const GlobalStorage: React.FC<GlobalStorageProps> = ({ children }) => {
     cliente:"",
     item: [
       {
+        idPed:"",
         nome: "",
         quantidade:0,
         valor: 0,

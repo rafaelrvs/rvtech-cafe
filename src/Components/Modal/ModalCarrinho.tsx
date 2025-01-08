@@ -8,25 +8,61 @@ interface ModalCarrinhoProps {
 }
 
 const ModalCarrinho: React.FC<ModalCarrinhoProps> = ({ setBtnPedido, btnPedido }) => {
-  const { pedido, setPedido } = useGlobalContext();
+  const { user, pedido, setPedido } = useGlobalContext();
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+  const [idUser, setIdUser] = useState<string>("");
 
-  const decreaseQuantity = (index:number,nome:string)=>{
-    console.log(index);
-    
-}
-async function increaseQuantity (index:number,nome:string){  
-    const quantidades = pedido.item
-    .filter(item => item.nome === nome) // Filtra os itens pelo nome
-    .map(item => item.quantidade);     // Extrai apenas a quantidade
+  // Sincroniza CPF do usuário
+  useEffect(() => {
+    if (user.length > 0) {
+      setIdUser(user[0].cpf);
+    }
+  }, [user]);
 
-  
-    console.log(quantidades);
-    
-    
-  }
+  // Sincroniza estado inicial de quantities com pedido
+  useEffect(() => {
+    const initialQuantities = pedido.item.reduce((acc, item) => {
+      acc[item.idSerial] = item.quantidade || 1;
+      return acc;
+    }, {} as { [key: number]: number });
+    setQuantities(initialQuantities);
+  }, [pedido]);
 
+  // Função para incrementar a quantidade pelo idSerial
+  const increaseQuantity = (idSerial: number) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [idSerial]: (prev[idSerial] || 1) + 1,
+    }));
 
+    setPedido((prevPedido) => ({
+      ...prevPedido,
+      item: prevPedido.item.map((pedidoItem) =>
+        pedidoItem.idSerial === idSerial
+          ? { ...pedidoItem, quantidade: (pedidoItem.quantidade || 1) + 1 }
+          : pedidoItem
+      ),
+    }));
+  };
+
+  // Função para decrementar a quantidade pelo idSerial
+  const decreaseQuantity = (idSerial: number) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [idSerial]: Math.max((prev[idSerial] || 1) - 1, 1),
+    }));
+
+    setPedido((prevPedido) => ({
+      ...prevPedido,
+      item: prevPedido.item.map((pedidoItem) =>
+        pedidoItem.idSerial === idSerial
+          ? { ...pedidoItem, quantidade: Math.max((pedidoItem.quantidade || 1) - 1, 1) }
+          : pedidoItem
+      ),
+    }));
+  };
+
+  // Renderização do carrinho
   return (
     <div className={styles.modalCarrinho}>
       <p
@@ -35,11 +71,11 @@ async function increaseQuantity (index:number,nome:string){
       >
         X
       </p>
-      {pedido.item.length > 0 && pedido.cliente ? (
+      {pedido.item.length > 0 ? (
         pedido.item
-          .filter((item) => item.quantidade > 0) // Filtra itens com quantidade maior que zero
-          .map((item, index) => (
-            <div key={`${item.nome}-${index}`} className={styles.item}>
+          .filter((item) => item.quantidade > 0 && item.descricao !== "") // Exibe apenas itens com quantidade > 0
+          .map((item) => (
+            <div key={item.idSerial} className={styles.item}>
               <div>
                 {item.urlPedido ? (
                   <img
@@ -58,9 +94,9 @@ async function increaseQuantity (index:number,nome:string){
                 <span>Descrição:</span> {item.descricao || "Sem descrição"}
               </p>
               <div className={styles.quantityControl}>
-                <button onClick={() => decreaseQuantity(index,item.nome)}>-</button>
-                <span>{quantities[index] || item.quantidade}</span>
-                <button onClick={() => increaseQuantity(index,item.nome)}>+</button>
+                <button onClick={() => decreaseQuantity(item.idSerial)}>-</button>
+                <span>{quantities[item.idSerial] || item.quantidade}</span>
+                <button onClick={() => increaseQuantity(item.idSerial)}>+</button>
               </div>
               <p className={styles.descProduto}>
                 <span>Preço: R$</span> {(item.valor || 0).toFixed(2)}

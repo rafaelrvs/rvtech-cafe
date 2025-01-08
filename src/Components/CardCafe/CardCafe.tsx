@@ -15,6 +15,12 @@ const CardCafe: React.FC = () => {
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [idUser, setIdUser] = useState<string>("");
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+  
+      const ano = new Date().getUTCFullYear();
+      const mes = new Date().getDate();
+      const hora = new Date().getMilliseconds();
+      const time = new Date().getTime();
+      const idSerial = ano+""+mes+""+hora+""+time;
 
   useEffect(() => {
     user.forEach((item) => {
@@ -32,8 +38,7 @@ const CardCafe: React.FC = () => {
     const quantity = quantities[index] || 1;
 
     // Atualiza o pedido
-
-
+    
 
       setPedido((prevPedido) => ({
         ...prevPedido,
@@ -41,6 +46,7 @@ const CardCafe: React.FC = () => {
         item: [
           ...prevPedido.item,
           {
+            idPed:idSerial,
             nome: item.nome,
             quantidade: quantity,
             valor: item.preco,
