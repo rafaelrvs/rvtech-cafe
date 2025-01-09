@@ -93,9 +93,9 @@ const ModalCarrinho: React.FC<ModalCarrinhoProps> = ({ setBtnPedido, btnPedido }
                 <span>Descrição:</span> {item.descricao || "Sem descrição"}
               </p>
               <div className={styles.quantityControl}>
-                <button onClick={() => decreaseQuantity(item.idSerial)}>-</button>
-                <span>{quantities[item.idSerial] || item.quantidade}</span>
-                <button onClick={() => increaseQuantity(item.idSerial)}>+</button>
+                <button className={styles.btnqtd} onClick={() => decreaseQuantity(item.idSerial)}>-</button>
+                <span className={styles.qtd}>{quantities[item.idSerial] || item.quantidade}</span>
+                <button  className={styles.btnqtd}  onClick={() => increaseQuantity(item.idSerial)}>+</button>
               </div>
               <p className={styles.descProduto}>
                 <span>Preço: R$</span> {(item.valor || 0).toFixed(2)}

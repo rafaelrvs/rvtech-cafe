@@ -81,3 +81,20 @@ box-shadow: 0px 0px 1px;
     flex-direction: column;
     
 }
+
+.quantityControl{
+    display: flex;
+    height: 50px;
+    width: 100px;
+}
+.qtd{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 50px;
+}
+.btnqtd{
+    width: 35px;
+    
+}
