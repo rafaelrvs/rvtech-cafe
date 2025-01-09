@@ -12,7 +12,6 @@ const ModalCarrinho: React.FC<ModalCarrinhoProps> = ({ setBtnPedido, btnPedido }
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
   const [idUser, setIdUser] = useState<string>("");
 
-  // Sincroniza CPF do usuário
   useEffect(() => {
     if (user.length > 0) {
       setIdUser(user[0].cpf);
